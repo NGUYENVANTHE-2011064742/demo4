@@ -2,7 +2,7 @@ package com.example.demo4.controller;
 
 import com.example.demo4.entity.Book;
 import com.example.demo4.services.BookService;
-//import com.example.demo4.services.CategoryService;
+import com.example.demo4.services.CategoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +17,8 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    //@Autowired
-    //private CategoryService categoryService;
+    @Autowired
+    private CategoryServices categoryService;
 
     @GetMapping
     public String showAllBooks(Model model){
@@ -26,7 +26,7 @@ public class BookController {
         model.addAttribute("books",books);
         return "book/list";
     }
-    /*@GetMapping("/add")
+    @GetMapping("/add")
     public String addBookForm(Model model){
         model.addAttribute("book", new Book());
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -57,5 +57,5 @@ public class BookController {
     public String deleteBook(@PathVariable("id") Long id){
         bookService.deleteBook(id);
         return "redirect:/books";
-    }*/
+    }
 }
