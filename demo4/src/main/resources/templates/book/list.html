@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Book List</title>
+    <!--    No se lay noi dung fragment co ten link-css o layout the vao cho nay-->
+    <th:block th:replace="~{layout :: link-css}"></th:block>
+</head>
+<body>
+<!--    No se lay noi dung fragment co ten header o layout the vao cho nay-->
+<th:block th:replace="~{layout :: header}"></th:block>
+<div class="container">
+    <!--No se lay gia tri cua bien title hien thi o the h1nay bien title duoc truyền từ controller qua-->
+    <h1 th:text="${title}"></h1>
+    <!-- tao table để hiển thị danh sách book-->
+    <table class="table">
+        <!-- tao header của table -->
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+        <!--        nội dung của các quyển sách -->
+        <!--        tiến hành 1 vòng lặp để quét từng quyển sách trong mangr books(được truyền từ controller qua)
+        ==> rồi gán vào biến book
+        và hiển thị thông tin ra html-->
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.price}"></td>
+            <td th:text="${book.category.name}"></td>
+            <td>
+                <!--                tạo link xử lý khi user bấm vào -->
+                <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
+                <a th:href="@{/books/delete/{id}(id=${book.id})}"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<th:block th:replace="~{layout :: footer}"></th:block>
+</body>
+</html>
