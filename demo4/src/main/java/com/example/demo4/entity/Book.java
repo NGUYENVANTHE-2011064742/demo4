@@ -3,7 +3,6 @@ package com.example.demo4.entity;
 import com.example.demo4.validator.annotation.ValidCategoryId;
 import com.example.demo4.validator.annotation.ValidUserId;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -15,21 +14,22 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="title")
-    @NotEmpty(message="Title must not be empty")
-    @Size(max=50,min=1,message ="Title must be less than 50 character")
-
+    @Column(name="title", length = 50)
+    @Size(max=50,min=1,message ="Title must be less than 50 characters")
+    @NotNull(message="Title must not be null")
     private String title;
 
-    @Column(name="author")
+    @Column(name="author", length=50)
+    @Size(max=50,min=1,message ="Author must be less than 50 characters")
     private String author;
 
     @Column(name="price")
     @NotNull(message="Price is required")
+    @Positive(message = "Price must be greater than 0")
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name="category_id", referencedColumnName = "id")
     @ValidCategoryId
     private Category category;
 
